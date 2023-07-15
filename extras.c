@@ -1,4 +1,13 @@
-#include "philo.h" 
+#include "philo.h"
+
+unsigned int	get_time(void)
+{
+	struct timeval	tv;
+
+	if (gettimeofday(&tv, NULL))
+		return (error("gettimeofday() FAILURE\n", NULL));
+	return ((tv.tv_sec * (long unsigned int)1000) + (tv.tv_usec / 1000));
+}
 
 
 int	ft_isdigit(int c)
@@ -7,17 +16,6 @@ int	ft_isdigit(int c)
 		return (1);
 	else
 		return (0);
-}
-
-t_philo	*ft_lstlast(t_philo *lst)
-{
-	if (!lst)
-		return (0);
-	while (lst->next)
-	{
-		lst = lst->next;
-	}
-	return (lst);
 }
 
 int	check_args(char **str, int argc)
@@ -44,7 +42,7 @@ int	check_args(char **str, int argc)
 	return (1);
 }
 
-int	ft_atoi(const char *str)
+long	ft_atoi(const char *str)
 {
 	int	i;
 	int	sign;
@@ -70,13 +68,6 @@ int	ft_atoi(const char *str)
 	return (result * sign);
 }
 
-// t_data *data(void)
-// {
-// 	static t_data data;
-
-// 	return (&data);
-// }
-
 void	printphilids(int argc, t_data *data)
 {
 	int	i;
@@ -90,3 +81,59 @@ void	printphilids(int argc, t_data *data)
 		i++;
 	}
 }
+
+void	clear_data(t_data	*data)
+{
+	if (data->tid)
+		free(data->tid);
+	if (data->forks)
+		free(data->forks);
+	if (data->philos)
+		free(data->philos);
+}
+
+
+void	ft_clean(t_data *data)
+{
+	int	i;
+
+	i = -1;
+	while (++i < data->philo_num)
+	{
+		pthread_mutex_destroy(&data->forks[i]);
+		pthread_mutex_destroy(&data->philos[i].lock);
+	}
+	pthread_mutex_destroy(&data->write);
+	pthread_mutex_destroy(&data->lock);
+	clear_data(data);
+}
+
+
+int	error(char *str, t_data *data)
+{
+	printf("%s\n", str);
+	if (data)
+		ft_exit(data);
+	return (1);
+}
+
+int	ft_strcmp(char *s1, char *s2)
+{
+	while (*s1 != '\0' && (*s1 == *s2))
+	{
+		s1++;
+		s2++;
+	}
+	return (*(char *)s1 - *(char *)s2);
+}
+
+int	ft_usleep(long unsigned int time)
+{
+	unsigned int	start;
+	start = get_time();
+	while ((get_time() - start) < time)
+		usleep(time / 10);
+	return(0);
+}
+
+

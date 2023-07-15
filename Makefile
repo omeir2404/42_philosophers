@@ -1,9 +1,9 @@
 NAME = philo
-SOURCES = main.c extras.c 
+SOURCES = main.c extras.c init.c actions.c threads.c 
 
 OBJECTS	=	$(SOURCES:.c=.o)
-CC	=	gcc -g
-# CFLAGS = -Wall -Wextra -Werror -g
+CC	=	gcc -g -pthread
+# CFLAGS = -Wall -pthread -Wextra -Werror -g
 all:		$(NAME)
 
 

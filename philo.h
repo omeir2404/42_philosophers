@@ -1,25 +1,33 @@
 #ifndef PHILO_H
+# define PHILO_H
 
-#include <pthread.h>
-#include <stdbool.h>
-#include <unistd.h>
-#include <stdlib.h>
-#include <stdio.h>
+# include <pthread.h>
+# include <stdbool.h>
+# include <unistd.h>
+# include <stdlib.h>
+# include <stdio.h>
+# include <sys/time.h>
+
+# define TAKE_FORKS "has taken a fork"
+# define THINKING "is thinking"
+# define SLEEPING "is sleeping"
+# define EATING "is eating"
+# define DIED "died"
+
 
 typedef struct s_philo
 {
 	struct s_data	*data;
-	int             id;
-	int             eat_cont;
-	int             status;
+	pthread_t		t1;
+	int				id;
+	int				eat_cont;
+	int				status;
 	int				eating;
-	unsigned int	time_to_die;
+	long unsigned int		time_to_die;
 	pthread_mutex_t	lock;
-	bool			fork;
-	pthread_mutex_t	*mutex_fork;
-	pthread_t		pthread;
-	struct s_philo			*next;
-}					t_philo;
+	pthread_mutex_t	*r_fork;
+	pthread_mutex_t	*l_fork;
+}	t_philo;
 
 typedef struct s_data
 {
@@ -40,18 +48,62 @@ typedef struct s_data
 } t_data;
 
 void	*routine(void *data_pointer);
-int		init(char **argv,t_data *data, int argc);
+int	init_data(t_data *data, char **argv, int argc);
 t_philo	*create_philo(int id);
 void	ft_lstadd_back(t_philo **lst, t_philo *new);
 // void	philo_init(int num, t_philo **philos);
 t_data *data(t_data *data);
 t_philo	*philos(void);
 int	check_args(char **str, int argc);
-int	ft_atoi(const char *str);
+long	ft_atoi(const char *str);
 t_philo	*ft_lstlast(t_philo *lst);
 void	philo_init(t_data *data);
-
-
+int	init(t_data *data, char **argv, int argc);
+int	forks_init(t_data * data);
 void	printphilids(int argc, t_data *data);
+void	ft_clean(t_data *data);
+void	clear_data(t_data	*data);
+int	error(char *str, t_data *data);
+unsigned int	get_time(void);
+int	ft_usleep(long unsigned int time);
+int	ft_strcmp(char *s1, char *s2);
 
+void	ft_exit(t_data *data);
+
+void	messages(char *str, t_philo *philo);
+void	take_forks(t_philo *philo);
+void	drop_forks(t_philo *philo);
+void eat(t_philo *philo);
+void	*superviser(void *philo_pointer);
+void	*monitor(void *data_pointer);
+
+void	*routine(void *philo_pointer);
+int	thread_init(t_data *data);
+
+
+// int	input_checker(char **argv)
+
+
+// long		ft_atoi(const char *str);
+// int			error(char *str, t_data *data);
+// int			ft_strcmp(char *s1, char *s2);
+// void		messages(char *str, t_philo *philo);
+// void		ft_exit(t_data *data);
+
+// //	time
+// unsigned int	get_time(void);
+// int			ft_usleep(long unsigned int time);
+
+// //	init
+// int			init(t_data *data, char **argv, int argc);
+// int			thread_init(t_data *data);
+
+// //	checker
+// int			input_checker(char **argv);
+
+// //	actions
+// void		eat(t_philo *philo);
+
+// //	threads
+// void		*routine(void *philo_pointer);
 #endif
