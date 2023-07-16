@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   init.c                                             :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: oharoon <oharoon@student.42.fr>            +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2023/07/16 17:27:30 by oharoon           #+#    #+#             */
+/*   Updated: 2023/07/16 17:33:21 by oharoon          ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "philo.h"
 
 int	alloc(t_data *data)
@@ -14,7 +26,7 @@ int	alloc(t_data *data)
 	return (0);
 }
 
-void philo_init(t_data *data)
+void	philo_init(t_data *data)
 {
 	int	i;
 
@@ -32,7 +44,7 @@ void philo_init(t_data *data)
 	}
 }
 
-int init_data(t_data *data, char **argv, int argc)
+int	init_data(t_data *data, char **argv, int argc)
 {
 	data->philo_num = (int) ft_atoi(argv[1]);
 	data->death_time = (long unsigned int) ft_atoi(argv[2]);

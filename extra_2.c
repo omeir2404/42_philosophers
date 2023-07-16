@@ -1,18 +1,28 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   extra_2.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: oharoon <oharoon@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/07/16 17:27:28 by oharoon           #+#    #+#             */
-/*   Updated: 2023/07/16 17:33:05 by oharoon          ###   ########.fr       */
+/*   Created: 2023/07/16 17:35:05 by oharoon           #+#    #+#             */
+/*   Updated: 2023/07/16 17:36:08 by oharoon          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo.h"
 
-void	ft_exit(t_data *data)
+void	clear_data(t_data	*data)
+{
+	if (data->tid)
+		free(data->tid);
+	if (data->forks)
+		free(data->forks);
+	if (data->philos)
+		free(data->philos);
+}
+
+void	ft_clean(t_data *data)
 {
 	int	i;
 
@@ -27,29 +37,30 @@ void	ft_exit(t_data *data)
 	clear_data(data);
 }
 
-int	case_one(t_data *data)
+int	error(char *str, t_data *data)
 {
-	data->start_time = get_time();
-	if (pthread_create(&data->tid[0], NULL, &routine, &data->philos[0]))
-		return (error("thread error", data));
-	pthread_detach(data->tid[0]);
-	while (data->dead == 0)
-		ft_usleep(0);
-	ft_exit(data);
-	return (0);
+	printf("%s\n", str);
+	if (data)
+		ft_exit(data);
+	return (1);
 }
 
-int	main(int argc, char **argv)
+int	ft_strcmp(char *s1, char *s2)
 {
-	t_data	data;
+	while (*s1 != '\0' && (*s1 == *s2))
+	{
+		s1++;
+		s2++;
+	}
+	return (*(char *)s1 - *(char *)s2);
+}
 
-	if (!check_args(argv, argc))
-		return (1);
-	init(&data, argv, argc);
-	if (data.philo_num == 1)
-		return (case_one(&data));
-	if (thread_init(&data))
-		return (1);
-	ft_exit(&data);
+int	ft_usleep(long unsigned int time)
+{
+	unsigned int	start;
+
+	start = get_time();
+	while ((get_time() - start) < time)
+		usleep(time / 10);
 	return (0);
 }

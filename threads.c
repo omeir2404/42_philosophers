@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   threads.c                                          :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: oharoon <oharoon@student.42.fr>            +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2023/07/16 17:27:21 by oharoon           #+#    #+#             */
+/*   Updated: 2023/07/16 17:27:22 by oharoon          ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "philo.h"
 
 void	*monitor(void *data_pointer)
@@ -82,5 +94,6 @@ int	thread_init(t_data *data)
 		if (pthread_join(data->tid[i], NULL))
 			return (error("error", data));
 	}
+	pthread_detach(t0);
 	return (0);
 }

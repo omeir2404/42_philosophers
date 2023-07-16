@@ -1,8 +1,21 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   actions.c                                          :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: oharoon <oharoon@student.42.fr>            +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2023/07/16 17:27:33 by oharoon           #+#    #+#             */
+/*   Updated: 2023/07/16 17:31:24 by oharoon          ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "philo.h"
 
 void	messages(char *str, t_philo *philo)
 {
 	unsigned int	time;
+
 	pthread_mutex_lock(&philo->data->write);
 	time = get_time() - philo->data->start_time;
 	if (ft_strcmp(DIED, str) == 0 && philo->data->dead == 0)
@@ -31,7 +44,7 @@ void	drop_forks(t_philo *philo)
 	ft_usleep(philo->data->sleep_time);
 }
 
-void eat(t_philo *philo)
+void	eat(t_philo *philo)
 {
 	take_forks(philo);
 	pthread_mutex_lock(&philo->lock);
@@ -42,5 +55,5 @@ void eat(t_philo *philo)
 	ft_usleep(philo->data->eat_time);
 	philo->eating = 0;
 	pthread_mutex_unlock(&philo->lock);
-	drop_forks(philo);	
+	drop_forks(philo);
 }

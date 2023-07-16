@@ -2,7 +2,7 @@ NAME = philo
 SOURCES = main.c extras.c init.c actions.c threads.c 
 
 OBJECTS	=	$(SOURCES:.c=.o)
-CC	=	gcc -g -pthread
+CC	=	gcc -g -pthread -fsanitize=address
 # CFLAGS = -Wall -pthread -Wextra -Werror -g
 all:		$(NAME)
 
