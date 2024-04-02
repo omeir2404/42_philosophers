@@ -78,17 +78,3 @@ long	ft_atoi(const char *str)
 	}
 	return (result * sign);
 }
-
-void	printphilids(int argc, t_data *data)
-{
-	int		i;
-	t_philo	*temp;
-
-	i = 0;
-	temp = data->philos;
-	while (i < data->philo_num)
-	{
-		printf("%i ", temp[i].id);
-		i++;
-	}
-}

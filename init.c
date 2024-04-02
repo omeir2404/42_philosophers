@@ -54,9 +54,6 @@ int	init_data(t_data *data, char **argv, int argc)
 		data->meals_nb = (int) ft_atoi(argv[5]);
 	else
 		data->meals_nb = -1;
-	if (data->philo_num <= 0 || data->philo_num > 200 || data->death_time < 0
-		|| data->eat_time < 0 || data->sleep_time < 0)
-		return (error("error", NULL));
 	data->dead = 0;
 	data->finished = 0;
 	pthread_mutex_init(&data->write, NULL);

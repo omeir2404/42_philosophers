@@ -70,7 +70,6 @@ t_philo			*ft_lstlast(t_philo *lst);
 void			philo_init(t_data *data);
 int				init(t_data *data, char **argv, int argc);
 int				forks_init(t_data *data);
-void			printphilids(int argc, t_data *data);
 void			ft_clean(t_data *data);
 void			clear_data(t_data	*data);
 int				error(char *str, t_data *data);
