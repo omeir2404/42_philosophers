@@ -6,7 +6,7 @@
 /*   By: oharoon <oharoon@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/16 17:27:36 by oharoon           #+#    #+#             */
-/*   Updated: 2023/07/16 17:34:56 by oharoon          ###   ########.fr       */
+/*   Updated: 2026/03/17 11:01:46 by oharoon          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,26 +29,50 @@ int	ft_isdigit(int c)
 		return (0);
 }
 
+static int	is_valid_number(char *s)
+{
+	int	i;
+
+	i = 0;
+	if (s[i] == '+')
+		i++;
+	if (s[i] == '\0')
+		return (0);
+	while (s[i])
+	{
+		if (!ft_isdigit(s[i]))
+			return (0);
+		i++;
+	}
+	return (1);
+}
+
+static int	arg_error(void)
+{
+	write(2, "Error\n", 6);
+	return (0);
+}
+
 int	check_args(char **str, int argc)
 {
+	int	i;
+
 	if (argc != 6 && argc != 5)
+		return (arg_error());
+	i = 1;
+	while (i < argc)
 	{
-		write(1, "error\n", 6);
-		return (0);
+		if (!is_valid_number(str[i]))
+			return (arg_error());
+		i++;
 	}
 	if (ft_atoi(str[2]) <= 0 || ft_atoi(str[3]) <= 0
 		|| ft_atoi(str[4]) <= 0 || ft_atoi(str[1]) < 1)
-	{
-		write(1, "error\n", 6);
-		return (0);
-	}
+		return (arg_error());
 	if (argc == 6)
 	{
 		if (ft_atoi(str[5]) <= 0)
-		{
-			write(1, "error\n", 6);
-			return (0);
-		}
+			return (arg_error());
 	}
 	return (1);
 }

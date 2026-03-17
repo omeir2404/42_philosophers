@@ -6,7 +6,7 @@
 /*   By: oharoon <oharoon@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/16 17:27:07 by oharoon           #+#    #+#             */
-/*   Updated: 2023/07/16 17:30:43 by oharoon          ###   ########.fr       */
+/*   Updated: 2026/03/17 11:01:46 by oharoon          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,9 +83,8 @@ void			messages(char *str, t_philo *philo);
 void			take_forks(t_philo *philo);
 void			drop_forks(t_philo *philo);
 void			eat(t_philo *philo);
-void			*superviser(void *philo_pointer);
+void			*supervisor(void *philo_pointer);
 void			*monitor(void *data_pointer);
-void			*routine(void *philo_pointer);
 int				thread_init(t_data *data);
 
 #endif
